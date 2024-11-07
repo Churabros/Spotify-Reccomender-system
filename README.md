@@ -28,20 +28,33 @@ The project uses a dataset containing various attributes related to songs on Spo
 ## Results
 ### Model Comparison
 
-1. **Cosine Similarity Model**
-   - **Evaluation Metrics**:
-     - **Average Precision**: 0.83 — indicating that the model’s top recommendations align with the genre of the input track quite well.
-     - **Average Recall**: 0.06 — showing that it could recommend more relevant tracks if expanded.
-     - **Average MRR (Mean Reciprocal Rank)**: 0.90 — high rank consistency for genre relevance.
-   - **Performance**: This model shows high precision but has lower recall, meaning it's particularly good at finding genre-specific recommendations but might miss out on broader similarities due to the restricted genre-based approach. The high MRR indicates that relevant recommendations often appear at the top of the list.
+# Final Evaluation
 
-2. **Deep Learning Model (Autoencoder)**
-   - **Evaluation Metrics**:
-     - **Reconstruction Loss**:
-       - Final Training Loss: 0.0032
-       - Final Validation Loss: 0.0045 — low reconstruction error, suggesting that the autoencoder effectively captures underlying patterns in the track features.
-     - **Average Similarity of Recommendations**: The recommendations have a high degree of similarity to input tracks, aligning with their numerical features but showing some variability in genre compared to the cosine similarity model.
-   - **Performance**: The autoencoder produces well-embedded tracks and offers diversity in recommendations by leveraging learned features beyond genre. The low reconstruction loss supports that the model has learned distinct musical characteristics effectively.
+
+This evaluation compares two recommendation models developed for this project: a deep learning autoencoder-based model and a Transformer-based model. Both models aim to recommend tracks that closely match the genre and characteristics of the input track, enhancing the user experience by providing relevant and interesting song recommendations.
+
+#### 1. Deep Learning Autoencoder Model
+
+The autoencoder model leverages dense layers to generate compact embeddings for each track based on musical features. This model’s effectiveness was evaluated using reconstruction loss and average similarity as key metrics:
+
+- **Final Training Loss**: 0.0009
+- **Final Validation Loss**: 0.0012
+- **Average Similarity of Recommendations**: 0.9969
+
+These metrics indicate that the model successfully learns to reconstruct track features, with low training and validation losses suggesting a good fit without overfitting. The high average similarity (0.9969) reflects that recommendations are closely aligned with the characteristics of the input track, indicating high relevance for the user.
+
+#### 2. Transformer-Based Model
+
+The Transformer model uses a simplified architecture to process the combined features of each track, generating embeddings that capture genre and characteristic relationships. Evaluated with precision and Mean Reciprocal Rank (MRR) metrics:
+
+- **Average Precision**: 0.76
+- **Average MRR**: 0.90
+
+With a precision score of 76%, the Transformer model performs slightly lower in genre alignment compared to other models. However, it maintains a high MRR score, indicating that relevant recommendations frequently appear early in the list. This approach offers users both relevance and diversity, introducing new music within similar genres.
+
+#### Summary
+
+Both models provide effective recommendations, though they emphasize different aspects of relevance and diversity. The **Deep Learning Autoencoder Model** excels in feature reconstruction and similarity, making it highly relevant for closely matching input tracks. Conversely, the **Transformer-Based Model** offers competitive ranking with some diversity in its recommendations. Based on overall performance, the Deep Learning Autoencoder Model may offer the best balance of relevance for users seeking recommendations highly aligned with their initial inputs feature embeddings.
 
 
 ## Future Work
