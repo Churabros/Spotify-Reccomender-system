@@ -5,18 +5,19 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import StandardScaler
 from pathlib import Path
 
-# Load the dataset
-#sample_df = pd.read_csv('C:/Users/PC/Documents/Moringa/phase_5/Spotify-Reccomender-system/Data/dataset.csv')
-sample_df = pd.read_csv('Data/dataset.csv')
+# Load dataset
+dataset_path = Path("Data/dataset.csv")
+if dataset_path.exists():
+    sample_df = pd.read_csv(dataset_path)
+else:
+    st.error("Dataset not found. Please check the file path.")
 
 # Sampling for demonstration
 sample_df = sample_df.sample(n=10000, random_state=1)
 
 # Define numerical features for scaling
-numerical_features = [
-    'danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
-    'instrumentalness', 'liveness', 'valence', 'tempo'
-]
+numerical_features = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness',
+                      'instrumentalness', 'liveness', 'valence', 'tempo']
 
 # Scale numerical features
 scaler = StandardScaler()
@@ -26,22 +27,19 @@ numerical_scaled = scaler.fit_transform(sample_df[numerical_features])
 cosine_sim = cosine_similarity(numerical_scaled)
 sim_df = pd.DataFrame(cosine_sim, index=sample_df['track_name'], columns=sample_df['track_name'])
 
-# Load CSS for custom styling
-def load_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+# Load CSS and HTML
+css_path = Path("static/style.css")
+html_path = Path("templates/index.html")
 
-# Load HTML template
-def load_html(file_name):
-    with open(file_name, 'r') as f:
-        html_content = f.read()
-    return html_content
+if css_path.exists():
+    load_css(css_path)
+else:
+    st.error("CSS file not found!")
 
-# Apply CSS styling
-load_css("static/style.css")
-
-# Display the HTML content
-st.markdown(load_html("templates/index.html"), unsafe_allow_html=True)
+if html_path.exists():
+    st.markdown(load_html(html_path), unsafe_allow_html=True)
+else:
+    st.error("HTML template not found!")
 
 # Recommendation function
 def recommend(track_name, num_recommendations=5):
@@ -65,18 +63,18 @@ with st.form("recommendation_form"):
     submit_button = st.form_submit_button("Get Recommendations")
 
 if submit_button:
-    input_tracks = [track1, track2, track3, track4, track5]
-    recommendations = {}
-
-    # Generate recommendations for each input track
-    for track in input_tracks:
-        if track:  # Ensure track input is not empty
+    input_tracks = [track for track in [track1, track2, track3, track4, track5] if track]
+    if not input_tracks:
+        st.warning("Please enter at least one track.")
+    else:
+        recommendations = {}
+        for track in input_tracks:
             recs = recommend(track, num_recommendations=num_recommendations)
             recommendations[track] = recs if recs else ["No recommendations found"]
 
-    # Display recommendations
-    for track, recs in recommendations.items():
-        st.write(f"Recommendations for **{track}**:")
-        for idx, rec in enumerate(recs):
-            rec_genre = sample_df[sample_df['track_name'] == rec]['track_genre'].values[0]
-            st.write(f"{idx + 1}. {rec} (Genre: {rec_genre})")
+        # Display recommendations
+        for track, recs in recommendations.items():
+            st.write(f"Recommendations for **{track}**:")
+            for idx, rec in enumerate(recs):
+                rec_genre = sample_df[sample_df['track_name'] == rec]['track_genre'].values[0]
+                st.write(f"{idx + 1}. {rec} (Genre: {rec_genre})")
