@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Recommendation System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Music Recommendation System</h1>
+    <form method="POST">
+        <label for="track1">Favorite Song 1:</label>
+        <input type="text" name="track1" required><br><br>
+
+        <label for="track2">Favorite Song 2:</label>
+        <input type="text" name="track2" required><br><br>
+
+        <label for="track3">Favorite Song 3:</label>
+        <input type="text" name="track3" required><br><br>
+
+        <label for="track4">Favorite Song 4:</label>
+        <input type="text" name="track4" required><br><br>
+
+        <label for="track5">Favorite Song 5:</label>
+        <input type="text" name="track5" required><br><br>
+
+        <button type="submit">Get Recommendations</button>
+    </form>
+
+    {% if recommendations %}
+        <h2>Recommendations</h2>
+        <ul>
+            {% for track, recs in recommendations.items() %}
+                <li><strong>For "{{ track }}":</strong>
+                    <ul>
+                        {% for rec in recs %}
+                            <li>{{ rec }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
+
+
