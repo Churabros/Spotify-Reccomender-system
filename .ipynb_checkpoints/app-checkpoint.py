@@ -6,7 +6,8 @@ from sklearn.preprocessing import StandardScaler
 from pathlib import Path
 
 # Load the dataset
-sample_df = pd.read_csv('C:/Users/PC/Documents/Moringa/phase_5/Spotify-Reccomender-system/Data/dataset.csv')
+#sample_df = pd.read_csv('C:/Users/PC/Documents/Moringa/phase_5/Spotify-Reccomender-system/Data/dataset.csv')
+sample_df = pd.read_csv('Data/dataset.csv')
 
 # Sampling for demonstration
 sample_df = sample_df.sample(n=10000, random_state=1)
