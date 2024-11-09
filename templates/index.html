@@ -7,41 +7,58 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Music Recommendation System</h1>
-    <form method="POST">
-        <label for="track1">Favorite Song 1:</label>
-        <input type="text" name="track1" required><br><br>
+    <div class="container">
+        <header>
+            <h1>Music Recommendation System</h1>
+            <p>Enter your favorite songs to get personalized recommendations.</p>
+        </header>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="track1">Favorite Song 1:</label>
+                <input type="text" name="track1" required>
+            </div>
 
-        <label for="track2">Favorite Song 2:</label>
-        <input type="text" name="track2" required><br><br>
+            <div class="form-group">
+                <label for="track2">Favorite Song 2:</label>
+                <input type="text" name="track2" required>
+            </div>
 
-        <label for="track3">Favorite Song 3:</label>
-        <input type="text" name="track3" required><br><br>
+            <div class="form-group">
+                <label for="track3">Favorite Song 3:</label>
+                <input type="text" name="track3" required>
+            </div>
 
-        <label for="track4">Favorite Song 4:</label>
-        <input type="text" name="track4" required><br><br>
+            <div class="form-group">
+                <label for="track4">Favorite Song 4:</label>
+                <input type="text" name="track4" required>
+            </div>
 
-        <label for="track5">Favorite Song 5:</label>
-        <input type="text" name="track5" required><br><br>
+            <div class="form-group">
+                <label for="track5">Favorite Song 5:</label>
+                <input type="text" name="track5" required>
+            </div>
 
-        <button type="submit">Get Recommendations</button>
-    </form>
+            <button type="submit">Get Recommendations</button>
+        </form>
 
-    {% if recommendations %}
-        <h2>Recommendations</h2>
-        <ul>
-            {% for track, recs in recommendations.items() %}
-                <li><strong>For "{{ track }}":</strong>
+        {% if recommendations %}
+        <section class="recommendations">
+            <h2>Recommendations</h2>
+            <ul>
+                {% for track, recs in recommendations.items() %}
+                <li>
+                    <strong>For "{{ track }}":</strong>
                     <ul>
                         {% for rec in recs %}
                             <li>{{ rec }}</li>
                         {% endfor %}
                     </ul>
                 </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+    </div>
 </body>
 </html>
-
-
