@@ -28,7 +28,7 @@ cosine_sim = cosine_similarity(numerical_scaled)
 sim_df = pd.DataFrame(cosine_sim, index=sample_df['track_name'], columns=sample_df['track_name'])
 
 # Load CSS and HTML
-css_path = Path("Documents/Moringa/phase_5/Spotify-Reccomender-system/static/style.css")
+css_path = Path("static/style.css")
 html_path = Path("templates/index.html")
 
 if css_path.exists():
