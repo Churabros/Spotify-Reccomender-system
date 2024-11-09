@@ -41,7 +41,6 @@ def load_html(file_name):
 load_css("static/style.css")
 
 # Display the HTML content
-st.markdown(load_html("templates/index.html"), unsafe_allow_html=True)
 
 # Recommendation function
 def recommend(track_name, num_recommendations=5):
